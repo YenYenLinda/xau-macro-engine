@@ -1,14 +1,16 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify
 
 app = Flask(__name__)
 
-@app.route("/")
+# ROOT ROUTE
+@app.route("/", methods=["GET"])
 def home():
     return "Macro API is running"
 
+# MACRO ROUTE (IMPORTANT)
 @app.route("/macro", methods=["GET", "POST"])
 def macro():
-    return jsonify({
+    data = {
         "institutional": {
             "cot_bias": "bullish",
             "long_pct": 62,
@@ -35,7 +37,8 @@ def macro():
             "adp": {"actual": 120, "forecast": 150},
             "jolts": {"actual": 8.5, "forecast": 8.8}
         }
-    })
+    }
+    return jsonify(data)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
